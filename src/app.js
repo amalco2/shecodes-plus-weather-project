@@ -40,12 +40,22 @@ iconElement.setAttribute(
     response.data.condition.icon);
 
 }
-let apiKey = "040c3166574e3dftbd2oda29cab8383c";
-let city = "Barcelona"
-let units = "metric";
 
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=${units}`;
+function search(city) {
+    let apiKey = "040c3166574e3dftbd2oda29cab8383c";
+    let units = "metric";
+    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=${units}`;
+    axios.get(apiUrl).then(displayTemperature);
+}
+
+function handleSubmit(event) {
+    event.preventDefault();
+    let cityInputElement = document.querySelector("#city-input");
+    search(cityInputElement.value);
+}
+
+search("New York")
 
 
-axios.get(apiUrl).then(displayTemperature);
-
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
