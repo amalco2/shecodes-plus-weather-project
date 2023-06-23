@@ -30,14 +30,16 @@ descriptionElement.innerHTML = (response.data.condition.description);
 humidityElement.innerHTML = (response.data.temperature.humidity);
 windElement.innerHTML = Math.round(response.data.wind.speed);
 dateElement.innerHTML = formatDate(response.data.time*1000);
+
 iconElement.setAttribute(
     "src", 
-    `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png`);
-}
+    response.data.condition.icon_url);
+
 iconElement.setAttribute(
     "alt", 
-    `broken-clouds-day`);
+    response.data.condition.icon);
 
+}
 let apiKey = "040c3166574e3dftbd2oda29cab8383c";
 let city = "Barcelona"
 let units = "metric";
