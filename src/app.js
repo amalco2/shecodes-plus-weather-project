@@ -15,6 +15,8 @@ return `${day} ${hours}:${minutes}`
 }
 
 function displayTemperature(response) {
+
+    console.log(response.data);
   
 let temperatureElement = document.querySelector("#temperature");
 let cityElement = document.querySelector("#city");
@@ -52,7 +54,7 @@ function handleSubmit(event) {
 
 function displayFahrenheitTemperature(event) {
     event.preventDefault();
-    let fahrenheitTemperature = Math.round((14 * 9) / 5 + 22);
+    let fahrenheitTemperature = Math.round((celsiusTemperature * 9) / 5 + 32);
     let temperatureElement = document.querySelector("#temperature");
     celsiusLink.classList.remove("active");
     fahrenheitLink.classList.add("active");
@@ -69,6 +71,8 @@ function displayCelsiusTemperature(event) {
 
 let celsiusTemperature = null;
 
+
+
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
@@ -78,4 +82,4 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemperature)
 let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature)
 
-search("New York")
+search("Jutiapa")
