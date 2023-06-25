@@ -1,30 +1,57 @@
 function formatDate(timestamp) {
-let date = new Date(timestamp);
-let hours = date.getHours();
-if (hours < 10) {
-    hours = `0${hours}`;
+    let date = new Date(timestamp);
+    let hours = date.getHours();
+        if (hours < 10) {
+            hours = `0${hours}`;
+        }
+
+        let minutes = date.getMinutes();
+        if (minutes < 10) {
+            minutes = `0${minutes}`;
+        }
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let day = days[date.getDay()];
+return `${day} ${hours}:${minutes}`
 }
 
-let minutes = date.getMinutes();
-if (minutes < 10) {
-    minutes = `0${minutes}`;
-}
-let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-let day = days[date.getDay()];
-return `${day} ${hours}:${minutes}`
+function displayForecast () {
+    let forecastElement = document.querySelector("#forecast");
+
+    let forecastHTML = `<div class="row">`;
+    let days = ["Thu", "Fri", "Sat", "Sun"];
+    days.forEach(function (day) {
+        forecastHTML = 
+            forecastHTML + 
+            `
+                <div class="col-2">
+                    <div class="weather-forecast-date">${day}</div>      
+                    <img 
+                    src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png" 
+                    alt="" 
+                    width="42"
+                    />
+                    <div class="weather-forecast-temperatures">
+                    <span class="weather-forecase-minimum">18</span>° 
+                    | <span class="weather-forecast-maximum">35</span>°
+                    </div>
+                </div>
+            `;
+        })
+    forecastHTML = forecastHTML + `</div>`;
+    forecastElement.innerHTML = forecastHTML;
+console.log(forecastHTML);
+   
 }
 
 function displayTemperature(response) {
 
-    console.log(response.data);
-  
-let temperatureElement = document.querySelector("#temperature");
-let cityElement = document.querySelector("#city");
-let descriptionElement = document.querySelector("#description");
-let humidityElement = document.querySelector("#humidity");
-let windElement = document.querySelector("#wind");
-let dateElement = document.querySelector("#date");
-let iconElement = document.querySelector("#icon");
+    let temperatureElement = document.querySelector("#temperature");
+    let cityElement = document.querySelector("#city");
+    let descriptionElement = document.querySelector("#description");
+    let humidityElement = document.querySelector("#humidity");
+    let windElement = document.querySelector("#wind");
+    let dateElement = document.querySelector("#date");
+    let iconElement = document.querySelector("#icon");
 
 celsiusTemperature = response.data.temperature.current
 
@@ -71,8 +98,6 @@ function displayCelsiusTemperature(event) {
 
 let celsiusTemperature = null;
 
-
-
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
@@ -81,5 +106,7 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemperature)
 
 let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature)
+
+displayForecast();
 
 search("Jutiapa")
