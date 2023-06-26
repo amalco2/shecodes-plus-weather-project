@@ -15,24 +15,28 @@ return `${day} ${hours}:${minutes}`
 }
 
 function displayForecast () {
+
+    let forecast = response.data.daily;
+
     let forecastElement = document.querySelector("#forecast");
 
     let forecastHTML = `<div class="row">`;
-    let days = ["Thu", "Fri", "Sat", "Sun"];
-    days.forEach(function (day) {
+
+
+    forecast.forEach(function (forecastDay) {
         forecastHTML = 
             forecastHTML + 
             `
                 <div class="col-2">
-                    <div class="weather-forecast-date">${day}</div>      
+                    <div class="weather-forecast-date">${forecastDay.daily.time}</div>      
                     <img 
-                    src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png" 
-                    alt="" 
+                    src="${forecastDay.daily.condition.icon_url}" 
+                    alt="${forecastDat.daily.condition.icon}" 
                     width="42"
                     />
                     <div class="weather-forecast-temperatures">
-                    <span class="weather-forecase-minimum">18</span>° 
-                    | <span class="weather-forecast-maximum">35</span>°
+                    <span class="weather-forecase-minimum">${forecastDay.daily.temperature.minimum}</span>° 
+                    | <span class="weather-forecast-maximum">${forecastDay.daily.temperature.maximum}</span>°
                     </div>
                 </div>
             `;
@@ -107,6 +111,6 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemperature)
 let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature)
 
-displayForecast();
-
 search("Jutiapa")
+
+displayForecast();
