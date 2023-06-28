@@ -14,38 +14,54 @@ function formatDate(timestamp) {
 return `${day} ${hours}:${minutes}`
 }
 
-function displayForecast () {
+function formatDay(timestamp) {
+    let date = new Date(timestamp * 1000);
+    let day = date.getDay();
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-    let forecast = response.data.daily;
+return days[day];
+}
+function displayForecast (response) {
+   
+    let forecast = response.daily;
 
     let forecastElement = document.querySelector("#forecast");
 
     let forecastHTML = `<div class="row">`;
 
 
-    forecast.forEach(function (forecastDay) {
+    forecast.forEach(function (forecastDay, index) {
+        if (index < 6) {
         forecastHTML = 
             forecastHTML + 
             `
                 <div class="col-2">
-                    <div class="weather-forecast-date">${forecastDay.daily.time}</div>      
+                    <div class="weather-forecast-date">${formatday(forecastDay.daily.time)}</div>      
                     <img 
-                    src="${forecastDay.daily.condition.icon_url}" 
-                    alt="${forecastDat.daily.condition.icon}" 
+                    src="${forecastDay.data.daily[0].condition.icon_url}" 
+                    alt="${forecastDay.data.daily.condition.icon}" 
                     width="42"
                     />
                     <div class="weather-forecast-temperatures">
-                    <span class="weather-forecase-minimum">${forecastDay.daily.temperature.minimum}</span>° 
-                    | <span class="weather-forecast-maximum">${forecastDay.daily.temperature.maximum}</span>°
+                    <span class="weather-forecase-minimum">${Math.round(forecastDay.daily.temperature.minimum)}</span>° 
+                    | <span class="weather-forecast-maximum">${Math.round(forecastDay.daily.temperature.maximum)}</span>°
                     </div>
                 </div>
             `;
-        })
+        }
+    });
     forecastHTML = forecastHTML + `</div>`;
     forecastElement.innerHTML = forecastHTML;
-console.log(forecastHTML);
+        console.log(forecastHTML);
    
 }
+
+function getForecast(coordinates) {
+    console.log(coordinates);
+    let apiKey = "040c3166574e3dftbd2oda29cab8383c";
+    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`;
+    axios.get(apiUrl).then(displayForecast);
+  }
 
 function displayTemperature(response) {
 
@@ -112,5 +128,3 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature)
 
 search("Jutiapa")
-
-displayForecast();
